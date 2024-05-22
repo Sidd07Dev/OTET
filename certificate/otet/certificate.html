@@ -1,0 +1,208 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            position: relative;
+            /* Added */
+        }
+
+        .card-header {
+            background-color: #fdfdfe;
+            color: #100e0e;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            font-size: 16px;
+        }
+
+        .btn-print {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .certificate-info {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .certificate-info p {
+            flex-grow: 1;
+        }
+
+        .certificate-info .left {
+            text-align: left;
+        }
+
+        .certificate-info .right {
+            text-align: right;
+        }
+
+        p {
+            font-size: large;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Center the watermark */
+            opacity: 0.3;
+            /* Adjust the opacity as needed */
+            z-index: 1;
+            /* Ensure the watermark appears above other content */
+        }
+
+        .empty {
+            height: 50px;
+            width: 100%;
+        }
+
+        @media print {
+
+            .card-header,
+            .btn-print {
+                margin-top: 300px;
+                font-weight: bolder;
+                color: black;
+                background-color: transparent;
+            }
+
+            .card-body {
+                font-size: 824px;
+                height: 21rem;
+            }
+
+            .row {
+                margin-bottom: 10px;
+            }
+
+            .certificate-info {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            p {
+                font-size: large;
+            }
+
+            #button {
+                display: none;
+            }
+
+            .card {
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                height: 100%;
+                position: relative;
+                /* Added */
+            }
+
+            .watermark {
+                position: absolute;
+                top: 90%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                /* Center the watermark */
+                opacity: 0.3;
+                /* Adjust the opacity as needed */ 
+                z-index: 1;
+                /* Ensure the watermark appears above other content */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-24">
+                <div class="card mt-4">
+                   
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="certificate-info">
+                                    <p class="font-weight-bold mb-0 left">Serial No.: <?php echo $row['SLNO']; ?></p>
+                                    <p class="font-weight-bold mb-0 right">Appl No.: <?php echo $row['OTETID']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="certificate-info">
+                                    <p class="font-weight-bold mb-0 left">Certificate No.: <?php echo $row['CERTNO']; ?></p>
+                                    <p class="font-weight-bold mb-0 right">Roll No.: <?php echo $row['ROLLNO']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="text-center mb-0">Odisha Teacher Eligibility Test Certificate</h2>
+                        </div>
+                    
+                        <div class="row">
+                            <img src="<?php echo $row['PROFILEPATH'] ?>" alt="Applicant Profile Picture" class=" d-block" style="height: 6rem;">
+                            <img src="logo.png" alt="Watermark" class="watermark">
+                        </div>
+                        <div class="empty"></div>
+                        <div class="row">
+                            <p class="mb-0">Certified that <label for=""> <?php echo $row['CNAME']; ?> </label> /daughter of <label for=""> <?php echo $row['FNAME']; ?> </label><br>
+                                qualified the
+                                Odisha Teacher Eligibility Test <label for=""><?php echo $row['PASSYEAR']; ?></label> and secured <label for=""><?php echo $row['TOTAL']; ?></label>(……………….)
+                                marks in paper <label for=""><?php echo $row['PAPEROPT']; ?></label>,<label for=""><?php echo $row['PAPEROPT2']; ?></label> Under
+                                category <label for=""> <?php echo $row['CASTE']; ?></label> .</p>
+
+                        </div>
+                        <div class="empty"></div>
+                        <img src="" alt="">
+                        <div class="empty">
+                            <p class="mb-0">Date of publication of Results : <label for=""><?php echo $row['DOP']; ?></label></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="certificate-info">
+                                    <p class="font-weight-bold mb-0 left">Date of Issue </p>
+                                    <p class="font-weight-bold mb-0 right">SECRETARY</p>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <button class="btn btn-print" id="button" onclick="window.print()">Print</button>
+        </div>
+    </div>
+</body>
+
+</html>
