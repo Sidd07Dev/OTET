@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+      position: relative;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: auto;
+      padding: 40px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .btn-login {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .btn-login:hover {
+      background-color: #0056b3;
+    }
+    .footer-text {
+      text-align: center;
+      margin-top: 20px;
+      color: #777;
+    }
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.3;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="login-container">
+    <h2><i class="fas fa-user"></i> OTET LOGIN</h2>
+    <form id="loginForm" action="index1.php" method="post" enctype="multipart/form-data"  >
+      <div class="form-group" >
+        <input type="text" class="form-control" placeholder="Username" name="Username" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+        <small id="passwordHelp" class="form-text text-muted">Password must be at least 8 characters long.</small>
+      </div>
+      <button type="submit" class="btn btn-login" id="submitButton" disabled><i class="fas fa-sign-in-alt"></i> Login</button>
+    </form>
+    <p class="footer-text">Don't have an account? <a href="#"><i class="fas fa-user-plus"></i> Sign up</a></p>
+  </div>
+</div>
+
+<!-- Watermark -->
+<div class="watermark" id="watermark">
+  <img src="logo.png" alt="Watermark" width="200">
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Custom JavaScript -->
+<script>
+  // Function to parse URL parameters
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
+
+  // Check if notification parameter exists
+  var notification = getUrlParameter('notification');
+  if (notification !== '') {
+    // Display notification using Bootstrap alert
+    var notificationContainer = document.createElement('div');
+    notificationContainer.classList.add('alert', 'alert-info', 'mt-3');
+    notificationContainer.innerHTML = '<strong>Notification:</strong> ' + notification;
+    document.body.appendChild(notificationContainer);
+  }
+
+  // Validate password length
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+    var password = document.getElementById("password").value;
+    if (password.length < 8) {
+      event.preventDefault();
+      document.getElementById("passwordHelp").innerHTML = "Password must be at least 8 characters long.";
+      document.getElementById("password").classList.add("is-invalid");
+    }
+  });
+
+  // Enable/disable submit button based on password length
+  document.getElementById("password").addEventListener("input", function() {
+    var password = this.value;
+    if (password.length >= 8) {
+      document.getElementById("passwordHelp").innerHTML = "Password must be at least 8 characters long.";
+      document.getElementById("password").classList.remove("is-invalid");
+      document.getElementById("submitButton").disabled = false;
+    } else {
+      document.getElementById("submitButton").disabled = true;
+    }
+  });
+
+  // Watermark animation
+  var watermark = document.getElementById('watermark');
+  var angleX = 0;
+  var angleY = 0;
+  var speedX = 0.01; // Adjust the horizontal speed as needed
+  var speedY = 0.005; // Adjust the vertical speed as needed
+
+  function moveWatermark() {
+    angleX += speedX;
+    angleY += speedY;
+    var x = Math.sin(angleX) * 20; // Adjust the horizontal amplitude of the zigzag
+    var y = Math.sin(angleY) * 20; // Adjust the vertical amplitude of the zigzag
+    watermark.style.left = 50 + x + '%';
+    watermark.style.top = 50 + y + '%';
+    requestAnimationFrame(moveWatermark);
+  }
+
+  moveWatermark();
+</script>
+
+</body>
+</html>
